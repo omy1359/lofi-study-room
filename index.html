@@ -47,9 +47,9 @@
                 </div>
                 
                 <div class="flex gap-2">
-                    <input type="text" id="custom-url" placeholder="유튜브 영상 주소를 입력하세요 (https://youtube.com/...)" 
+                    <input type="text" id="custom-url" placeholder="Enter your own YouTube playlist URL" 
                            class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 flex-grow text-[11px] focus:outline-none focus:border-indigo-500 transition">
-                    <button onclick="loadCustomVideo()" class="bg-indigo-600 hover:bg-indigo-500 px-6 py-2 rounded-xl text-[11px] font-bold transition">연결</button>
+                    <button onclick="loadCustomVideo()" class="bg-indigo-600 hover:bg-indigo-500 px-6 py-2 rounded-xl text-[11px] font-bold transition">CONNECT</button>
                 </div>
             </div>
 
@@ -100,28 +100,35 @@
     </footer>
 
     <script>
-        function changeMusic(videoId) {
+        function changeMusic(videoId, listId = '') {
             const player = document.getElementById('main-video');
-            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0&enablejsapi=1`;
+            let src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0&enablejsapi=1`;
+            if (listId) src += `&list=${listId}`;
+            player.src = src;
         }
 
-        // 유튜브 링크 추출 및 로드 함수
         function loadCustomVideo() {
             const url = document.getElementById('custom-url').value;
             let videoId = '';
+            let listId = '';
 
+            // 플레이리스트 ID 추출
+            if (url.includes('list=')) {
+                listId = url.split('list=')[1].split('&')[0];
+            }
+
+            // 비디오 ID 추출
             if (url.includes('v=')) {
                 videoId = url.split('v=')[1].split('&')[0];
             } else if (url.includes('be/')) {
                 videoId = url.split('be/')[1].split('?')[0];
-            } else if (url.includes('embed/')) {
-                videoId = url.split('embed/')[1].split('?')[0];
             }
 
-            if (videoId) {
-                changeMusic(videoId);
+            if (videoId || listId) {
+                // 비디오 ID가 없어도 플레이리스트 ID만 있으면 재생 가능
+                changeMusic(videoId || '', listId);
             } else {
-                alert('올바른 유튜브 주소를 입력해주세요.');
+                alert('Please enter a valid YouTube URL.');
             }
         }
 
