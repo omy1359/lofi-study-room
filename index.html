@@ -31,7 +31,7 @@
         <div class="lg:col-span-2 space-y-6">
             <div class="glass rounded-3xl overflow-hidden aspect-video shadow-2xl border border-white/5 bg-black">
                 <iframe id="main-video" width="100%" height="100%" 
-                        src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&rel=0&enablejsapi=1" 
+                        src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&rel=0" 
                         frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
             
@@ -42,19 +42,19 @@
                     <button onclick="changeMusic('4xDzrJKXOOY')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">💻 SYNTHWAVE</button>
                     <button onclick="changeMusic('S0_U3_fK9I0')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🎻 CLASSICAL</button>
                     <button onclick="changeMusic('5yx6BWVndM8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">☕ CAFE LOFI</button>
-                    <button onclick="changeMusic('MV5qzMt7dg8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🍃 ASIAN LOFI</button>
+                    <button onclick="changeMusic('05689M4zkzo')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🏠 CHILL VIBES</button>
                     <button onclick="changeMusic('hAtp_R0pD1o')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌧️ RAINY NIGHT</button>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="grid grid-cols-2 gap-4">
-                    <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group">
-                        <span class="text-sm font-bold group-hover:text-indigo-400 transition">Google Meet</span>
+                    <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10">
+                        <span class="text-sm font-bold">Google Meet</span>
                         <span class="text-[9px] opacity-40 uppercase tracking-tighter">New Meeting</span>
                     </button>
-                    <button onclick="window.open('https://zoom.us/start/webinar')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group">
-                        <span class="text-sm font-bold group-hover:text-blue-400 transition">Zoom Meeting</span>
+                    <button onclick="window.open('https://zoom.us/start/webinar')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10">
+                        <span class="text-sm font-bold">Zoom Meeting</span>
                         <span class="text-[9px] opacity-40 uppercase tracking-tighter">Instant Launch</span>
                     </button>
                 </div>
@@ -76,18 +76,14 @@
                     <span class="text-slate-500 font-bold text-xs uppercase">Min</span>
                 </div>
                 <div class="text-center mb-6">
-                    <div id="display" class="text-5xl mono font-medium mb-2 text-white">25:00</div>
+                    <div id="display" class="text-5xl mono font-medium mb-2 text-white font-bold">25:00</div>
                     <p id="mode-label" class="text-[10px] tracking-[0.2em] text-slate-500 uppercase font-bold">Focus Mode</p>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <button id="start-btn" onclick="start()" class="col-span-2 bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-xl font-bold transition shadow-lg shadow-indigo-500/20 text-sm">START</button>
-                    <button onclick="pause()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-xs text-slate-300">PAUSE</button>
+                    <button onclick="pause()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-xs">PAUSE</button>
                     <button onclick="reset()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-xs text-rose-400">RESET</button>
                 </div>
-            </div>
-            <div class="glass p-5 rounded-3xl border border-white/5 text-center">
-                <p class="text-[10px] text-slate-500 leading-relaxed italic mb-1">"Stay focused, stay humble."</p>
-                <p class="text-[9px] text-slate-600 uppercase tracking-widest font-bold">Notification Alert</p>
             </div>
         </div>
     </main>
@@ -103,33 +99,17 @@
             player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0&enablejsapi=1`;
         }
 
-        const quotes = [
-            { text: "Your limitation—it's only your imagination.", author: "Daily Motivation" },
-            { text: "Push yourself, because no one else is going to do it for you.", author: "Success Mindset" },
-            { text: "Success doesn't just find you. You have to go out and get it.", author: "Greatness" },
-            { text: "Don't stop when you're tired. Stop when you're done.", author: "Persistence" },
-            { text: "The harder you work, the greater you'll feel when you achieve it.", author: "Hard Work" }
-        ];
-
-        function displayRandomQuote() {
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            document.getElementById('daily-quote').innerText = `"${quotes[randomIndex].text}"`;
-            document.getElementById('quote-author').innerText = quotes[randomIndex].author;
-        }
-
         function updateDate() {
             const now = new Date();
             const year = now.getFullYear(), month = String(now.getMonth() + 1).padStart(2, '0'), date = String(now.getDate()).padStart(2, '0');
             const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
             document.getElementById('current-date').innerText = `${year}. ${month}. ${date}. ${dayNames[now.getDay()]}`;
         }
-
-        updateDate(); displayRandomQuote();
+        updateDate();
 
         let mode = 'timer', time = 25 * 60, elapsed = 0, isRunning = false, interval;
         const inputMin = document.getElementById('input-min');
         const display = document.getElementById('display');
-        const mainDisplay = document.getElementById('main-display');
 
         function formatTime(s) {
             const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
@@ -140,7 +120,6 @@
             if (mode === 'timer' && !isRunning) {
                 time = Math.max(0, parseInt(inputMin.value || 0)) * 60;
                 display.innerText = formatTime(time);
-                mainDisplay.innerText = formatTime(time);
             }
         });
 
@@ -149,9 +128,26 @@
             document.getElementById('tab-timer').className = mode === 'timer' ? 'pb-2 px-2 active-tab transition-all font-bold' : 'pb-2 px-2 opacity-50 transition-all font-bold';
             document.getElementById('tab-stopwatch').className = mode === 'stopwatch' ? 'pb-2 px-2 active-tab transition-all font-bold' : 'pb-2 px-2 opacity-50 transition-all font-bold';
             document.getElementById('timer-setting').style.visibility = mode === 'timer' ? 'visible' : 'hidden';
-            if (mode === 'timer') {
-                time = parseInt(inputMin.value || 0) * 60;
-                document.getElementById('mode-label').innerText = "Focus Mode";
-                display.innerText = formatTime(time);
-            } else {
-                elapsed = 0; document.getElementById('mode-label').innerText = "Study Records"; display.innerText = "00:00:00
+            if (mode === 'timer') { time = parseInt(inputMin.value || 0) * 60; display.innerText = formatTime(time); }
+            else { elapsed = 0; display.innerText = "00:00:00"; }
+        }
+
+        function start() {
+            if (isRunning) return; isRunning = true;
+            document.getElementById('start-btn').innerText = "RUNNING...";
+            interval = setInterval(() => {
+                if (mode === 'timer') {
+                    if (time <= 0) { pause(); alert("Time is up! Take a break."); return; }
+                    time--; display.innerText = formatTime(time);
+                } else {
+                    elapsed++; display.innerText = formatTime(elapsed);
+                }
+                document.getElementById('main-display').innerText = display.innerText;
+            }, 1000);
+        }
+
+        function pause() { isRunning = false; clearInterval(interval); document.getElementById('start-btn').innerText = "START"; }
+        function reset() { pause(); if (mode === 'timer') { time = parseInt(inputMin.value || 0) * 60; display.innerText = formatTime(time); } else { elapsed = 0; display.innerText = "00:00:00"; } document.getElementById('main-display').innerText = display.innerText; }
+    </script>
+</body>
+</html>
