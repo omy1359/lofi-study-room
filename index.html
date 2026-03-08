@@ -35,13 +35,13 @@
             
             <div class="glass p-3 rounded-2xl border border-white/10 overflow-x-auto">
                 <div class="flex gap-2 min-w-max">
-                    <button onclick="changeMusic('jfKfPfyJRdk')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold border-indigo-500/50">📖 STUDY/RELAX</button>
-                    <button onclick="changeMusic('rUxyKA_-grg')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">😴 SLEEP/CHILL</button>
-                    <button onclick="changeMusic('4xDzrJKXOOY')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🎮 SYNTHWAVE/GAMING</button>
-                    <button onclick="changeMusic('Dx5qF66C20k')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">💤 PEACEFUL SLEEP</button>
+                    <button onclick="changeMusic('jfKfPfyJRdk')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold border-indigo-500/50">📖 LOFI HIP HOP (STUDY)</button>
+                    <button onclick="changeMusic('rUxyKA_-grg')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">😴 SLEEP/CHILL RADIO</button>
                     <button onclick="changeMusic('S0_U3_fK9I0')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🎻 CLASSICAL RADIO</button>
-                    <button onclick="changeMusic('05689M4zkzo')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🏠 CHILLY VIBES</button>
-                    <button onclick="changeMusic('5yx6BWVndM8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">☕ CAFE LOFI</button>
+                    <button onclick="changeMusic('5yx6BWVndM8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">☕ JAZZ LOFI (CAFE)</button>
+                    <button onclick="changeMusic('lP26UCnoH9s')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌃 DARK AMBIENT</button>
+                    <button onclick="changeMusic('hAtp_R0pD1o')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌧️ GENTLE RAIN</button>
+                    <button onclick="changeMusic('MV5qzMt7dg8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🍃 ASIAN LOFI</button>
                 </div>
             </div>
 
@@ -69,27 +69,19 @@
                     <button id="tab-timer" onclick="setMode('timer')" class="pb-2 px-2 active-tab transition-all">TIMER</button>
                     <button id="tab-stopwatch" onclick="setMode('stopwatch')" class="pb-2 px-2 opacity-50 transition-all">STOPWATCH</button>
                 </div>
-
                 <div id="timer-setting" class="flex justify-center items-center gap-2 mb-4">
                     <input type="number" id="input-min" value="25" min="0" max="999" class="bg-white/5 border border-white/10 rounded-lg w-16 py-1 text-center mono text-xl focus:outline-none focus:border-indigo-500 text-white">
                     <span class="text-slate-500 font-bold text-xs uppercase">Min</span>
                 </div>
-
                 <div class="text-center mb-6">
                     <div id="display" class="text-5xl mono font-medium mb-2 text-white">25:00</div>
                     <p id="mode-label" class="text-[10px] tracking-[0.2em] text-slate-500 uppercase">Focus Mode</p>
                 </div>
-
                 <div class="grid grid-cols-2 gap-3">
                     <button id="start-btn" onclick="start()" class="col-span-2 bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-xl font-bold transition shadow-lg shadow-indigo-500/20 text-sm">START</button>
                     <button onclick="pause()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-xs text-slate-300">PAUSE</button>
                     <button onclick="reset()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-xs text-rose-400">RESET</button>
                 </div>
-            </div>
-
-            <div class="glass p-5 rounded-3xl border border-white/5 text-center">
-                <p class="text-[10px] text-slate-500 leading-relaxed italic mb-1">"Stay focused, stay humble."</p>
-                <p class="text-[9px] text-slate-600 uppercase tracking-widest">Notification Alert</p>
             </div>
         </div>
     </main>
@@ -109,11 +101,7 @@
             { text: "Your limitation—it's only your imagination.", author: "Daily Motivation" },
             { text: "Push yourself, because no one else is going to do it for you.", author: "Success Mindset" },
             { text: "Success doesn't just find you. You have to go out and get it.", author: "Greatness" },
-            { text: "The harder you work for something, the greater you'll feel when you achieve it.", author: "Hard Work" },
-            { text: "Don't stop when you're tired. Stop when you're done.", author: "Persistence" },
-            { text: "Wake up with determination. Go to bed with satisfaction.", author: "Routine" },
-            { text: "Little things make big days.", author: "Consistency" },
-            { text: "It's going to be hard, but hard does not mean impossible.", author: "Strength" }
+            { text: "Don't stop when you're tired. Stop when you're done.", author: "Persistence" }
         ];
 
         function displayRandomQuote() {
@@ -134,7 +122,6 @@
         let mode = 'timer', time = 25 * 60, elapsed = 0, isRunning = false, interval;
         const inputMin = document.getElementById('input-min');
         const display = document.getElementById('display');
-        const mainDisplay = document.getElementById('main-display');
 
         function formatTime(s) {
             const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
@@ -145,7 +132,6 @@
             if (mode === 'timer' && !isRunning) {
                 time = Math.max(0, parseInt(inputMin.value || 0)) * 60;
                 display.innerText = formatTime(time);
-                mainDisplay.innerText = formatTime(time);
             }
         });
 
@@ -156,18 +142,14 @@
             document.getElementById('timer-setting').style.visibility = mode === 'timer' ? 'visible' : 'hidden';
             if (mode === 'timer') {
                 time = parseInt(inputMin.value || 0) * 60;
-                document.getElementById('mode-label').innerText = "Focus Mode";
                 display.innerText = formatTime(time);
             } else {
-                elapsed = 0;
-                document.getElementById('mode-label').innerText = "Study Records";
-                display.innerText = "00:00:00";
+                elapsed = 0; display.innerText = "00:00:00";
             }
         }
 
         function start() {
             if (isRunning) return;
-            if (mode === 'timer' && time <= 0) return alert("Please set focus time!");
             isRunning = true;
             document.getElementById('start-btn').innerText = "RUNNING...";
             interval = setInterval(() => {
@@ -177,12 +159,12 @@
                 } else {
                     elapsed++; display.innerText = formatTime(elapsed);
                 }
-                mainDisplay.innerText = display.innerText;
+                document.getElementById('main-display').innerText = display.innerText;
             }, 1000);
         }
 
         function pause() { isRunning = false; clearInterval(interval); document.getElementById('start-btn').innerText = "START"; }
-        function reset() { pause(); if (mode === 'timer') { time = parseInt(inputMin.value || 0) * 60; display.innerText = formatTime(time); } else { elapsed = 0; display.innerText = "00:00:00"; } mainDisplay.innerText = display.innerText; }
+        function reset() { pause(); if (mode === 'timer') { time = parseInt(inputMin.value || 0) * 60; display.innerText = formatTime(time); } else { elapsed = 0; display.innerText = "00:00:00"; } document.getElementById('main-display').innerText = display.innerText; }
     </script>
 </body>
 </html>
