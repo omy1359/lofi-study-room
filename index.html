@@ -14,6 +14,7 @@
         input::-webkit-inner-spin-button { display: none; }
         .music-btn { transition: all 0.3s ease; white-space: nowrap; border: 1px solid rgba(255,255,255,0.05); }
         .music-btn:hover { background: rgba(129, 140, 248, 0.2); transform: translateY(-2px); border-color: #818cf8; }
+        input::placeholder { color: rgba(255, 255, 255, 0.2); }
     </style>
 </head>
 <body class="text-slate-200 min-h-screen flex flex-col p-4 md:p-8">
@@ -23,7 +24,7 @@
             <h1 class="text-xl font-bold tracking-widest text-indigo-400 font-mono leading-none">🌙 STUDY ROOM</h1>
             <div id="current-date" class="text-[10px] tracking-[0.2em] text-slate-500 font-bold uppercase ml-1">2026. 03. 08. SUN</div>
         </div>
-        <div id="main-display" class="glass px-6 py-2 rounded-full mono text-2xl text-indigo-300 shadow-lg border border-indigo-500/30 font-bold">00:00:00</div>
+        <div id="main-display" class="glass px-6 py-2 rounded-full mono text-2xl text-indigo-300 shadow-lg border border-indigo-500/30 font-bold text-center">00:00:00</div>
     </header>
 
     <main class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto w-full flex-grow">
@@ -31,28 +32,35 @@
         <div class="lg:col-span-2 space-y-6">
             <div class="glass rounded-3xl overflow-hidden aspect-video shadow-2xl border border-white/5 bg-black">
                 <iframe id="main-video" width="100%" height="100%" 
-                        src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&rel=0" 
+                        src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&rel=0&enablejsapi=1" 
                         frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
             
-            <div class="glass p-3 rounded-2xl border border-white/10 overflow-x-auto">
-                <div class="flex gap-2 min-w-max">
-                    <button onclick="changeMusic('jfKfPfyJRdk')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold border-indigo-500/50">📚 LOFI STUDY</button>
-                    <button onclick="changeMusic('4xDzrJKXOOY')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌌 SYNTHWAVE</button>
-                    <button onclick="changeMusic('MV5qzMt7dg8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌴 BOSSA LOFI</button>
-                    <button onclick="changeMusic('5yx6BWVndM8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🎷 JAZZ LOFI</button>
-                    <button onclick="changeMusic('rUxyKA_-grg')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">💤 LOFI SLEEP</button>
+            <div class="glass p-4 rounded-3xl border border-white/10 space-y-4">
+                <div class="flex gap-4 justify-center border-b border-white/5 pb-4">
+                    <button onclick="changeMusic('jfKfPfyJRdk')" class="music-btn px-6 py-2 rounded-xl glass text-[10px] font-bold border-indigo-500/50 flex items-center gap-2">
+                        <span>📚</span> LOFI STUDY
+                    </button>
+                    <button onclick="changeMusic('4xDzrJKXOOY')" class="music-btn px-6 py-2 rounded-xl glass text-[10px] font-bold flex items-center gap-2">
+                        <span>🌌</span> SYNTHWAVE
+                    </button>
+                </div>
+                
+                <div class="flex gap-2">
+                    <input type="text" id="custom-url" placeholder="유튜브 영상 주소를 입력하세요 (https://youtube.com/...)" 
+                           class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 flex-grow text-[11px] focus:outline-none focus:border-indigo-500 transition">
+                    <button onclick="loadCustomVideo()" class="bg-indigo-600 hover:bg-indigo-500 px-6 py-2 rounded-xl text-[11px] font-bold transition">연결</button>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="grid grid-cols-2 gap-4">
-                    <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center border border-white/10 group">
-                        <span class="text-sm font-bold group-hover:text-indigo-400">Google Meet</span>
+                    <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center border border-white/10">
+                        <span class="text-sm font-bold">Google Meet</span>
                         <span class="text-[9px] opacity-40 uppercase tracking-tighter">New Meeting</span>
                     </button>
-                    <button onclick="window.open('https://zoom.us/start/webinar')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center border border-white/10 group">
-                        <span class="text-sm font-bold group-hover:text-blue-400">Zoom Meeting</span>
+                    <button onclick="window.open('https://zoom.us/start/webinar')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center border border-white/10">
+                        <span class="text-sm font-bold">Zoom Meeting</span>
                         <span class="text-[9px] opacity-40 uppercase tracking-tighter">Instant Launch</span>
                     </button>
                 </div>
@@ -71,7 +79,7 @@
                 </div>
                 <div id="timer-setting" class="flex justify-center items-center gap-2 mb-4">
                     <input type="number" id="input-min" value="25" min="0" max="999" class="bg-white/5 border border-white/10 rounded-lg w-16 py-1 text-center mono text-xl focus:outline-none focus:border-indigo-500 text-white font-bold">
-                    <span class="text-slate-500 font-bold text-xs uppercase">Min</span>
+                    <span class="text-slate-500 font-bold text-xs uppercase tracking-tighter">Minutes</span>
                 </div>
                 <div class="text-center mb-6">
                     <div id="display" class="text-5xl mono font-medium mb-2 text-white font-bold">25:00</div>
@@ -88,13 +96,33 @@
 
     <footer class="mt-8 flex justify-between items-center max-w-7xl mx-auto w-full border-t border-white/5 pt-6">
         <div class="text-[10px] text-slate-600 tracking-widest uppercase font-bold">Study Room &copy; 2026</div>
-        <div class="text-[11px] text-indigo-400/60 font-medium tracking-tight font-bold">Made by - Minhyuck Oh</div>
+        <div class="text-[11px] text-indigo-400/60 font-medium tracking-tight font-bold text-right flex-grow">Made by - Minhyuck Oh</div>
     </footer>
 
     <script>
         function changeMusic(videoId) {
             const player = document.getElementById('main-video');
             player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0&enablejsapi=1`;
+        }
+
+        // 유튜브 링크 추출 및 로드 함수
+        function loadCustomVideo() {
+            const url = document.getElementById('custom-url').value;
+            let videoId = '';
+
+            if (url.includes('v=')) {
+                videoId = url.split('v=')[1].split('&')[0];
+            } else if (url.includes('be/')) {
+                videoId = url.split('be/')[1].split('?')[0];
+            } else if (url.includes('embed/')) {
+                videoId = url.split('embed/')[1].split('?')[0];
+            }
+
+            if (videoId) {
+                changeMusic(videoId);
+            } else {
+                alert('올바른 유튜브 주소를 입력해주세요.');
+            }
         }
 
         function updateDate() {
@@ -123,8 +151,8 @@
 
         function setMode(newMode) {
             pause(); mode = newMode;
-            document.getElementById('tab-timer').className = mode === 'timer' ? 'pb-2 px-2 active-tab font-bold' : 'pb-2 px-2 opacity-50 font-bold';
-            document.getElementById('tab-stopwatch').className = mode === 'stopwatch' ? 'pb-2 px-2 active-tab font-bold' : 'pb-2 px-2 opacity-50 font-bold';
+            document.getElementById('tab-timer').className = mode === 'timer' ? 'pb-2 px-2 active-tab transition-all font-bold' : 'pb-2 px-2 opacity-50 transition-all font-bold';
+            document.getElementById('tab-stopwatch').className = mode === 'stopwatch' ? 'pb-2 px-2 active-tab transition-all font-bold' : 'pb-2 px-2 opacity-50 transition-all font-bold';
             document.getElementById('timer-setting').style.visibility = mode === 'timer' ? 'visible' : 'hidden';
             if (mode === 'timer') { time = parseInt(inputMin.value || 0) * 60; display.innerText = formatTime(time); }
             else { elapsed = 0; display.innerText = "00:00:00"; }
