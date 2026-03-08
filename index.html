@@ -37,11 +37,11 @@
             
             <div class="glass p-3 rounded-2xl border border-white/10 overflow-x-auto">
                 <div class="flex gap-2 min-w-max">
-                    <button onclick="changeMusic('jfKfPfyJRdk')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold border-indigo-500/50">📚 LOFI STUDY (1)</button>
-                    <button onclick="changeMusic('4xDzrJKXOOY')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌌 SYNTHWAVE (2)</button>
-                    <button onclick="changeMusic('MV5qzMt7dg8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🏖️ BOSSA LOFI (3)</button>
-                    <button onclick="changeMusic('5yx6BWVndM8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🎷 JAZZ LOFI (4)</button>
-                    <button onclick="changeMusic('rUxyKA_-grg')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">💤 LOFI SLEEP (5)</button>
+                    <button onclick="changeMusic('jfKfPfyJRdk')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold border-indigo-500/50">📚 LOFI STUDY</button>
+                    <button onclick="changeMusic('4xDzrJKXOOY')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌌 SYNTHWAVE</button>
+                    <button onclick="changeMusic('MV5qzMt7dg8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌴 BOSSA LOFI</button>
+                    <button onclick="changeMusic('5yx6BWVndM8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🎷 JAZZ LOFI</button>
+                    <button onclick="changeMusic('rUxyKA_-grg')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">💤 LOFI SLEEP</button>
                 </div>
             </div>
 
@@ -123,8 +123,8 @@
 
         function setMode(newMode) {
             pause(); mode = newMode;
-            document.getElementById('tab-timer').className = mode === 'timer' ? 'pb-2 px-2 active-tab transition-all font-bold' : 'pb-2 px-2 opacity-50 transition-all font-bold';
-            document.getElementById('tab-stopwatch').className = mode === 'stopwatch' ? 'pb-2 px-2 active-tab transition-all font-bold' : 'pb-2 px-2 opacity-50 transition-all font-bold';
+            document.getElementById('tab-timer').className = mode === 'timer' ? 'pb-2 px-2 active-tab font-bold' : 'pb-2 px-2 opacity-50 font-bold';
+            document.getElementById('tab-stopwatch').className = mode === 'stopwatch' ? 'pb-2 px-2 active-tab font-bold' : 'pb-2 px-2 opacity-50 font-bold';
             document.getElementById('timer-setting').style.visibility = mode === 'timer' ? 'visible' : 'hidden';
             if (mode === 'timer') { time = parseInt(inputMin.value || 0) * 60; display.innerText = formatTime(time); }
             else { elapsed = 0; display.innerText = "00:00:00"; }
