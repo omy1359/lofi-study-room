@@ -28,7 +28,6 @@
     </header>
 
     <main class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto w-full flex-grow">
-        
         <div class="lg:col-span-2 space-y-6">
             <div class="glass rounded-3xl overflow-hidden aspect-video shadow-2xl border border-white/5 bg-black">
                 <iframe id="main-video" width="100%" height="100%" 
@@ -45,11 +44,10 @@
                         <span>🌌</span> SYNTHWAVE
                     </button>
                 </div>
-                
                 <div class="flex gap-2">
                     <input type="text" id="custom-url" placeholder="Enter your own YouTube playlist URL" 
                            class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 flex-grow text-[11px] focus:outline-none focus:border-indigo-500 transition">
-                    <button onclick="loadCustomVideo()" class="bg-indigo-600 hover:bg-indigo-500 px-6 py-2 rounded-xl text-[11px] font-bold transition">CONNECT</button>
+                    <button onclick="loadCustomVideo()" class="bg-indigo-600 hover:bg-indigo-500 px-6 py-2 rounded-xl text-[11px] font-bold transition uppercase">Connect</button>
                 </div>
             </div>
 
@@ -95,11 +93,31 @@
     </main>
 
     <footer class="mt-8 flex justify-between items-center max-w-7xl mx-auto w-full border-t border-white/5 pt-6">
-        <div class="text-[10px] text-slate-600 tracking-widest uppercase font-bold">Study Room &copy; 2026</div>
+        <div class="flex flex-col gap-1">
+            <div class="text-[10px] text-slate-600 tracking-widest uppercase font-bold text-left">Study Room &copy; 2026</div>
+            <div class="text-[9px] text-slate-500 font-mono tracking-tighter text-left opacity-60">
+                TOTAL VISITORS: <span id="visit-count" class="text-indigo-400 font-bold">...</span>
+            </div>
+        </div>
         <div class="text-[11px] text-indigo-400/60 font-medium tracking-tight font-bold text-right flex-grow">Made by - Minhyuck Oh</div>
     </footer>
 
     <script>
+        // 1. 방문자 수 카운트 함수 (CountAPI 사용)
+        function updateVisitCount() {
+            // 민혁님의 고유 키 (임의로 생성한 도메인 기반 키)
+            const countKey = "lofimusicstudyroom-netlify-app";
+            fetch(`https://api.countapi.xyz/hit/${countKey}/visits`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('visit-count').innerText = data.value.toLocaleString();
+                })
+                .catch(() => {
+                    document.getElementById('visit-count').innerText = "LIVE";
+                });
+        }
+        updateVisitCount();
+
         function changeMusic(videoId, listId = '') {
             const player = document.getElementById('main-video');
             let src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0&enablejsapi=1`;
@@ -109,27 +127,12 @@
 
         function loadCustomVideo() {
             const url = document.getElementById('custom-url').value;
-            let videoId = '';
-            let listId = '';
-
-            // 플레이리스트 ID 추출
-            if (url.includes('list=')) {
-                listId = url.split('list=')[1].split('&')[0];
-            }
-
-            // 비디오 ID 추출
-            if (url.includes('v=')) {
-                videoId = url.split('v=')[1].split('&')[0];
-            } else if (url.includes('be/')) {
-                videoId = url.split('be/')[1].split('?')[0];
-            }
-
-            if (videoId || listId) {
-                // 비디오 ID가 없어도 플레이리스트 ID만 있으면 재생 가능
-                changeMusic(videoId || '', listId);
-            } else {
-                alert('Please enter a valid YouTube URL.');
-            }
+            let videoId = '', listId = '';
+            if (url.includes('list=')) listId = url.split('list=')[1].split('&')[0];
+            if (url.includes('v=')) videoId = url.split('v=')[1].split('&')[0];
+            else if (url.includes('be/')) videoId = url.split('be/')[1].split('?')[0];
+            if (videoId || listId) changeMusic(videoId || '', listId);
+            else alert('Please enter a valid YouTube URL.');
         }
 
         function updateDate() {
@@ -141,8 +144,7 @@
         updateDate();
 
         let mode = 'timer', time = 25 * 60, elapsed = 0, isRunning = false, interval;
-        const inputMin = document.getElementById('input-min');
-        const display = document.getElementById('display');
+        const inputMin = document.getElementById('input-min'), display = document.getElementById('display');
 
         function formatTime(s) {
             const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
