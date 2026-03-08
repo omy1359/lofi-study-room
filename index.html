@@ -12,7 +12,7 @@
         .mono { font-family: 'JetBrains Mono', monospace; }
         .active-tab { border-bottom: 2px solid #818cf8; color: #818cf8; }
         input::-webkit-inner-spin-button { display: none; }
-        .music-btn { transition: all 0.3s ease; }
+        .music-btn { transition: all 0.3s ease; white-space: nowrap; }
         .music-btn:hover { background: rgba(129, 140, 248, 0.2); transform: translateY(-2px); }
     </style>
 </head>
@@ -21,7 +21,7 @@
     <header class="flex justify-between items-end max-w-7xl mx-auto w-full mb-8">
         <div class="flex flex-col gap-1">
             <h1 class="text-xl font-bold tracking-widest text-indigo-400 font-mono leading-none">🌙 STUDY ROOM</h1>
-            <div id="current-date" class="text-[10px] tracking-[0.2em] text-slate-500 font-bold uppercase ml-1">2026. 00. 00. ---</div>
+            <div id="current-date" class="text-[10px] tracking-[0.2em] text-slate-500 font-bold uppercase ml-1">2026. 03. 08. SUN</div>
         </div>
         <div id="main-display" class="glass px-6 py-2 rounded-full mono text-2xl text-indigo-300 shadow-lg border border-indigo-500/30">00:00:00</div>
     </header>
@@ -30,30 +30,30 @@
         
         <div class="lg:col-span-2 space-y-6">
             <div class="glass rounded-3xl overflow-hidden aspect-video shadow-2xl border border-white/5">
-                <iframe id="main-video" width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe id="main-video" width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&rel=0&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
             
             <div class="glass p-3 rounded-2xl border border-white/10 overflow-x-auto">
                 <div class="flex gap-2 min-w-max">
-                    <button onclick="changeMusic('jfKfPfyJRdk')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter border-indigo-500/50">🎧 LOFI GIRL</button>
-                    <button onclick="changeMusic('4xDzrJKXOOY')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">💻 CODING</button>
-                    <button onclick="changeMusic('rPjez8z61rI')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">☕ CAFE JAZZ</button>
-                    <button onclick="changeMusic('lP26UCnoH9s')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">🌧️ RAINY DAY</button>
-                    <button onclick="changeMusic('n61ULEU7QD4')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">🌃 CHILL NIGHT</button>
-                    <button onclick="changeMusic('S0_U3_fK9I0')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">📚 CLASSICAL</button>
-                    <button onclick="changeMusic('mv5qzMt7dg8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">🌳 NATURE</button>
+                    <button onclick="changeMusic('jfKfPfyJRdk')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold border-indigo-500/50">🎧 LOFI GIRL</button>
+                    <button onclick="changeMusic('tNkZsRW7h2c')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">💻 CODING</button>
+                    <button onclick="changeMusic('5yx6BWVndM8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">☕ CAFE JAZZ</button>
+                    <button onclick="changeMusic('hAtp_R0pD1o')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌧️ RAIN STUDY</button>
+                    <button onclick="changeMusic('lP26UCnoH9s')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌃 CHILL NIGHT</button>
+                    <button onclick="changeMusic('S0_U3_fK9I0')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">📚 CLASSICAL</button>
+                    <button onclick="changeMusic('MCkTebktHVc')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌳 FOREST</button>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="grid grid-cols-2 gap-4">
-                    <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group text-center">
+                    <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group">
                         <span class="text-sm font-bold group-hover:text-indigo-400">Google Meet</span>
-                        <span class="text-[10px] opacity-40 uppercase tracking-tighter">Start New Meeting</span>
+                        <span class="text-[9px] opacity-40 uppercase tracking-tighter">New Meeting</span>
                     </button>
-                    <button onclick="window.open('https://zoom.us/start/webinar')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group text-center">
+                    <button onclick="window.open('https://zoom.us/start/webinar')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group">
                         <span class="text-sm font-bold group-hover:text-blue-400">Zoom Meeting</span>
-                        <span class="text-[10px] opacity-40 uppercase tracking-tighter">Instant Launch</span>
+                        <span class="text-[9px] opacity-40 uppercase tracking-tighter">Instant Launch</span>
                     </button>
                 </div>
                 <div class="glass px-6 py-4 rounded-2xl border border-white/10 flex flex-col justify-center items-center text-center">
@@ -72,7 +72,7 @@
 
                 <div id="timer-setting" class="flex justify-center items-center gap-2 mb-4">
                     <input type="number" id="input-min" value="25" min="0" max="999" class="bg-white/5 border border-white/10 rounded-lg w-16 py-1 text-center mono text-xl focus:outline-none focus:border-indigo-500 text-white">
-                    <span class="text-slate-500 font-bold text-xs uppercase tracking-tighter">Minutes</span>
+                    <span class="text-slate-500 font-bold text-xs uppercase">Min</span>
                 </div>
 
                 <div class="text-center mb-6">
@@ -81,9 +81,9 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
-                    <button id="start-btn" onclick="start()" class="col-span-2 bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-xl font-bold transition shadow-lg shadow-indigo-500/20">START</button>
-                    <button onclick="pause()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-sm text-slate-300">PAUSE</button>
-                    <button onclick="reset()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-sm text-rose-400">RESET</button>
+                    <button id="start-btn" onclick="start()" class="col-span-2 bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-xl font-bold transition shadow-lg shadow-indigo-500/20 text-sm">START</button>
+                    <button onclick="pause()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-xs text-slate-300">PAUSE</button>
+                    <button onclick="reset()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-xs text-rose-400">RESET</button>
                 </div>
             </div>
 
@@ -100,21 +100,20 @@
     </footer>
 
     <script>
-        // 음악 변경 함수
+        // 1. 음악 변경 기능
         function changeMusic(videoId) {
             const player = document.getElementById('main-video');
-            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`;
+            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0&enablejsapi=1`;
         }
 
+        // 2. 명언 데이터베이스 및 랜덤 표시
         const quotes = [
             { text: "Your limitation—it's only your imagination.", author: "Daily Motivation" },
             { text: "Push yourself, because no one else is going to do it for you.", author: "Success Mindset" },
             { text: "Success doesn't just find you. You have to go out and get it.", author: "Greatness" },
             { text: "The harder you work for something, the greater you'll feel when you achieve it.", author: "Hard Work" },
-            { text: "Dream bigger. Do bigger.", author: "Vision" },
             { text: "Don't stop when you're tired. Stop when you're done.", author: "Persistence" },
             { text: "Wake up with determination. Go to bed with satisfaction.", author: "Routine" },
-            { text: "Do something today that your future self will thank you for.", author: "Future" },
             { text: "Little things make big days.", author: "Consistency" },
             { text: "It's going to be hard, but hard does not mean impossible.", author: "Strength" }
         ];
@@ -125,17 +124,21 @@
             document.getElementById('quote-author').innerText = quotes[randomIndex].author;
         }
 
+        // 3. 날짜 업데이트
         function updateDate() {
             const now = new Date();
-            const year = now.getFullYear(), month = String(now.getMonth() + 1).padStart(2, '0'), date = String(now.getDate()).padStart(2, '0');
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const date = String(now.getDate()).padStart(2, '0');
             const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
             document.getElementById('current-date').innerText = `${year}. ${month}. ${date}. ${dayNames[now.getDay()]}`;
         }
 
-        updateDate(); displayRandomQuote();
-
+        // 4. 타이머 및 스탑워치 로직
         let mode = 'timer', time = 25 * 60, elapsed = 0, isRunning = false, interval;
         const inputMin = document.getElementById('input-min');
+        const display = document.getElementById('display');
+        const mainDisplay = document.getElementById('main-display');
 
         function formatTime(s) {
             const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
@@ -145,8 +148,8 @@
         inputMin.addEventListener('input', () => {
             if (mode === 'timer' && !isRunning) {
                 time = Math.max(0, parseInt(inputMin.value || 0)) * 60;
-                document.getElementById('display').innerText = formatTime(time);
-                document.getElementById('main-display').innerText = formatTime(time);
+                display.innerText = formatTime(time);
+                mainDisplay.innerText = formatTime(time);
             }
         });
 
@@ -158,11 +161,11 @@
             if (mode === 'timer') {
                 time = parseInt(inputMin.value || 0) * 60;
                 document.getElementById('mode-label').innerText = "Focus Mode";
-                document.getElementById('display').innerText = formatTime(time);
+                display.innerText = formatTime(time);
             } else {
                 elapsed = 0;
                 document.getElementById('mode-label').innerText = "Study Records";
-                document.getElementById('display').innerText = "00:00:00";
+                display.innerText = "00:00:00";
             }
         }
 
@@ -174,16 +177,20 @@
             interval = setInterval(() => {
                 if (mode === 'timer') {
                     if (time <= 0) { pause(); alert("Time is up! Take a break."); return; }
-                    time--; document.getElementById('display').innerText = formatTime(time);
+                    time--; display.innerText = formatTime(time);
                 } else {
-                    elapsed++; document.getElementById('display').innerText = formatTime(elapsed);
+                    elapsed++; display.innerText = formatTime(elapsed);
                 }
-                document.getElementById('main-display').innerText = document.getElementById('display').innerText;
+                mainDisplay.innerText = display.innerText;
             }, 1000);
         }
 
         function pause() { isRunning = false; clearInterval(interval); document.getElementById('start-btn').innerText = "START"; }
-        function reset() { pause(); if (mode === 'timer') { time = parseInt(inputMin.value || 0) * 60; document.getElementById('display').innerText = formatTime(time); } else { elapsed = 0; document.getElementById('display').innerText = "00:00:00"; } document.getElementById('main-display').innerText = document.getElementById('display').innerText; }
+        function reset() { pause(); if (mode === 'timer') { time = parseInt(inputMin.value || 0) * 60; display.innerText = formatTime(time); } else { elapsed = 0; display.innerText = "00:00:00"; } mainDisplay.innerText = display.innerText; }
+
+        // 초기화 실행
+        updateDate();
+        displayRandomQuote();
     </script>
 </body>
 </html>
