@@ -31,15 +31,21 @@
                 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
             
-            <div class="grid grid-cols-2 gap-4">
-                <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group">
-                    <span class="text-sm font-bold group-hover:text-indigo-400">Google Meet</span>
-                    <span class="text-[10px] opacity-40 uppercase tracking-tighter">Start New Meeting</span>
-                </button>
-                <button onclick="window.open('https://zoom.us/start/webinar')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group">
-                    <span class="text-sm font-bold group-hover:text-blue-400">Zoom Meeting</span>
-                    <span class="text-[10px] opacity-40 uppercase tracking-tighter">Instant Launch</span>
-                </button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group text-center">
+                        <span class="text-sm font-bold group-hover:text-indigo-400">Google Meet</span>
+                        <span class="text-[10px] opacity-40 uppercase tracking-tighter">Start New Meeting</span>
+                    </button>
+                    <button onclick="window.open('https://zoom.us/start/webinar')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group text-center">
+                        <span class="text-sm font-bold group-hover:text-blue-400">Zoom Meeting</span>
+                        <span class="text-[10px] opacity-40 uppercase tracking-tighter">Instant Launch</span>
+                    </button>
+                </div>
+                <div class="glass px-6 py-4 rounded-2xl border border-white/10 flex flex-col justify-center items-center text-center">
+                    <p id="daily-quote" class="text-[11px] text-slate-300 leading-relaxed italic mb-1">"Your limitation—it’s only your imagination."</p>
+                    <p id="quote-author" class="text-[9px] text-indigo-400/60 uppercase tracking-widest font-bold">Daily Motivation</p>
+                </div>
             </div>
         </div>
 
@@ -62,29 +68,44 @@
 
                 <div class="grid grid-cols-2 gap-3">
                     <button id="start-btn" onclick="start()" class="col-span-2 bg-indigo-600 hover:bg-indigo-500 text-white py-4 rounded-xl font-bold transition shadow-lg shadow-indigo-500/20">START</button>
-                    <button onclick="pause()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-sm">PAUSE</button>
+                    <button onclick="pause()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-sm text-slate-300">PAUSE</button>
                     <button onclick="reset()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-sm text-rose-400">RESET</button>
                 </div>
             </div>
 
             <div class="glass p-5 rounded-3xl border border-white/5 text-center">
-                <p class="text-[10px] text-slate-500 leading-relaxed italic mb-1">"Time is up! Take a break."</p>
+                <p class="text-[10px] text-slate-500 leading-relaxed italic mb-1">"Stay focused, stay humble."</p>
                 <p class="text-[9px] text-slate-600 uppercase tracking-widest">Notification Alert</p>
             </div>
         </div>
     </main>
 
     <footer class="mt-8 flex justify-between items-center max-w-7xl mx-auto w-full border-t border-white/5 pt-6">
-        <div class="text-[10px] text-slate-600 tracking-widest uppercase">
-            Study Room &copy; 2026
-        </div>
-        <div class="text-[11px] text-indigo-400/60 font-medium tracking-tight">
-            Made by - Minhyuck Oh
-        </div>
+        <div class="text-[10px] text-slate-600 tracking-widest uppercase">Study Room &copy; 2026</div>
+        <div class="text-[11px] text-indigo-400/60 font-medium tracking-tight">Made by - Minhyuck Oh</div>
     </footer>
 
     <script>
-        // 날짜 업데이트 함수
+        // 영어 명언 리스트
+        const quotes = [
+            { text: "Your limitation—it's only your imagination.", author: "Daily Motivation" },
+            { text: "Push yourself, because no one else is going to do it for you.", author: "Success Mindset" },
+            { text: "Success doesn't just find you. You have to go out and get it.", author: "Greatness" },
+            { text: "The harder you work for something, the greater you'll feel when you achieve it.", author: "Hard Work" },
+            { text: "Dream bigger. Do bigger.", author: "Vision" },
+            { text: "Don't stop when you're tired. Stop when you're done.", author: "Persistence" },
+            { text: "Wake up with determination. Go to bed with satisfaction.", author: "Routine" },
+            { text: "Do something today that your future self will thank you for.", author: "Future" },
+            { text: "Little things make big days.", author: "Consistency" },
+            { text: "It's going to be hard, but hard does not mean impossible.", author: "Strength" }
+        ];
+
+        function displayRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('daily-quote').innerText = `"${quotes[randomIndex].text}"`;
+            document.getElementById('quote-author').innerText = quotes[randomIndex].author;
+        }
+
         function updateDate() {
             const now = new Date();
             const year = now.getFullYear();
@@ -92,10 +113,12 @@
             const date = String(now.getDate()).padStart(2, '0');
             const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
             const day = dayNames[now.getDay()];
-            
             document.getElementById('current-date').innerText = `${year}. ${month}. ${date}. ${day}`;
         }
+
+        // 초기 실행
         updateDate();
+        displayRandomQuote();
 
         let mode = 'timer', time = 25 * 60, elapsed = 0, isRunning = false, interval;
         const inputMin = document.getElementById('input-min');
@@ -118,7 +141,6 @@
             document.getElementById('tab-timer').className = mode === 'timer' ? 'pb-2 px-2 active-tab' : 'pb-2 px-2 opacity-50';
             document.getElementById('tab-stopwatch').className = mode === 'stopwatch' ? 'pb-2 px-2 active-tab' : 'pb-2 px-2 opacity-50';
             document.getElementById('timer-setting').style.visibility = mode === 'timer' ? 'visible' : 'hidden';
-            
             if (mode === 'timer') {
                 time = parseInt(inputMin.value || 0) * 60;
                 document.getElementById('mode-label').innerText = "Focus Mode";
@@ -137,16 +159,10 @@
             document.getElementById('start-btn').innerText = "RUNNING...";
             interval = setInterval(() => {
                 if (mode === 'timer') {
-                    if (time <= 0) {
-                        pause();
-                        alert("Time is up! Take a break.");
-                        return;
-                    }
-                    time--;
-                    document.getElementById('display').innerText = formatTime(time);
+                    if (time <= 0) { pause(); alert("Time is up! Take a break."); return; }
+                    time--; document.getElementById('display').innerText = formatTime(time);
                 } else {
-                    elapsed++;
-                    document.getElementById('display').innerText = formatTime(elapsed);
+                    elapsed++; document.getElementById('display').innerText = formatTime(elapsed);
                 }
                 document.getElementById('main-display').innerText = document.getElementById('display').innerText;
             }, 1000);
