@@ -27,34 +27,41 @@
     </header>
 
     <main class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto w-full flex-grow">
+        
         <div class="lg:col-span-2 space-y-6">
             <div class="glass rounded-3xl overflow-hidden aspect-video shadow-2xl border border-white/5 bg-black">
                 <iframe id="main-video" width="100%" height="100%" 
-                        src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&rel=0" 
+                        src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&list=PL6NdkXsPL07Il2hEQGcLI4dg_LTg7xA2L" 
                         frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
             
             <div class="glass p-3 rounded-2xl border border-white/10 overflow-x-auto">
-                <div class="flex gap-2 min-w-max">
-                    <button onclick="changeMusic('jfKfPfyJRdk')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🎧 LOFI STUDY</button>
-                    <button onclick="changeMusic('rUxyKA_-grg')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">😴 CHILL/SLEEP</button>
-                    <button onclick="changeMusic('4xDzrJKXOOY')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">💻 SYNTHWAVE</button>
-                    <button onclick="changeMusic('S0_U3_fK9I0')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🎻 CLASSICAL</button>
-                    <button onclick="changeMusic('5yx6BWVndM8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">☕ CAFE LOFI</button>
-                    <button onclick="changeMusic('05689M4zkzo')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🏠 HOME VIBES</button>
-                    <button onclick="changeMusic('hAtp_R0pD1o')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌧️ RAIN RADIO</button>
+                <div class="flex gap-2 min-w-max text-white">
+                    <button onclick="changeMusic('jfKfPfyJRdk', 0)" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold border-indigo-500/50">🎧 LOFI HIP HOP (STUDY)</button>
+                    <button onclick="changeMusic('rUxyKA_-grg', 1)" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">😴 SLEEP/CHILL</button>
+                    <button onclick="changeMusic('4xDzrJKXOOY', 2)" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">💻 SYNTHWAVE</button>
+                    <button onclick="changeMusic('S0_U3_fK9I0', 3)" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🎻 CLASSICAL</button>
+                    <button onclick="changeMusic('5yx6BWVndM8', 4)" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">☕ CAFE LOFI</button>
+                    <button onclick="changeMusic('05689M4zkzo', 5)" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🏠 CHILL VIBES</button>
+                    <button onclick="changeMusic('hAtp_R0pD1o', 6)" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold">🌧️ RAINY NIGHT</button>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
-                <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center border border-white/10">
-                    <span class="text-sm font-bold">Google Meet</span>
-                    <span class="text-[9px] opacity-40 uppercase tracking-tighter">New Meeting</span>
-                </button>
-                <button onclick="window.open('https://zoom.us/start/webinar')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center border border-white/10">
-                    <span class="text-sm font-bold">Zoom Meeting</span>
-                    <span class="text-[9px] opacity-40 uppercase tracking-tighter">Instant Launch</span>
-                </button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group">
+                        <span class="text-sm font-bold group-hover:text-indigo-400">Google Meet</span>
+                        <span class="text-[9px] opacity-40 uppercase tracking-tighter">New Meeting</span>
+                    </button>
+                    <button onclick="window.open('https://zoom.us/start/webinar')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group">
+                        <span class="text-sm font-bold group-hover:text-blue-400">Zoom Meeting</span>
+                        <span class="text-[9px] opacity-40 uppercase tracking-tighter">Instant Launch</span>
+                    </button>
+                </div>
+                <div class="glass px-6 py-4 rounded-2xl border border-white/10 flex flex-col justify-center items-center text-center">
+                    <p id="daily-quote" class="text-[11px] text-slate-300 leading-relaxed italic mb-1">"Your limitation—it’s only your imagination."</p>
+                    <p id="quote-author" class="text-[9px] text-indigo-400/60 uppercase tracking-widest font-bold">Daily Motivation</p>
+                </div>
             </div>
         </div>
 
@@ -87,11 +94,10 @@
     </footer>
 
     <script>
-        function changeMusic(videoId) {
+        // 플레이리스트를 유지하면서 영상만 교체하는 함수
+        function changeMusic(videoId, index) {
             const player = document.getElementById('main-video');
-            // 주소 끝에 타임스탬프를 더해 매번 새로운 실시간 요청을 보냄
-            const nocache = new Date().getTime();
-            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0&t=${nocache}`;
+            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&list=PL6NdkXsPL07Il2hEQGcLI4dg_LTg7xA2L&index=${index}`;
         }
 
         function updateDate() {
