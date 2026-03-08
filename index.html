@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minhyuck's Lofi Study</title>
+    <title>Lofi Study Room</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
@@ -11,35 +11,46 @@
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .mono { font-family: 'JetBrains Mono', monospace; }
         .active-tab { border-bottom: 2px solid #818cf8; color: #818cf8; }
+        input::placeholder { color: rgba(255, 255, 255, 0.3); }
     </style>
 </head>
 <body class="text-slate-200 min-h-screen flex flex-col p-4 md:p-8">
 
     <header class="flex justify-between items-center max-w-7xl mx-auto w-full mb-8">
-        <h1 class="text-xl font-bold tracking-tighter text-indigo-400">🌙 LOFI STUDY ROOM</h1>
-        <div id="main-display" class="glass px-6 py-2 rounded-full mono text-2xl text-indigo-300 shadow-lg">00:00:00</div>
+        <h1 class="text-xl font-bold tracking-widest text-indigo-400">🌙 STUDY ROOM</h1>
+        <div id="main-display" class="glass px-6 py-2 rounded-full mono text-2xl text-indigo-300 shadow-lg border border-indigo-500/30">00:00:00</div>
     </header>
 
     <main class="grid grid-cols-1 lg:grid-cols-4 gap-6 max-w-7xl mx-auto w-full flex-grow">
         
         <div class="lg:col-span-3 space-y-4">
-            <div class="glass rounded-3xl overflow-hidden aspect-video relative shadow-2xl">
-                <iframe src="https://minhyuck.daily.co/test-room" 
-                        allow="camera; microphone; fullscreen" 
-                        class="w-full h-full border-none"></iframe>
+            <div class="glass p-3 rounded-2xl flex gap-3 border border-white/10">
+                <input type="text" id="meet-url" placeholder="구글 미팅 주소를 입력하세요 (https://meet.google.com/...)" 
+                       class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 flex-grow text-sm focus:outline-none focus:border-indigo-500 transition">
+                <button onclick="updateMeeting()" class="bg-indigo-600 hover:bg-indigo-500 px-6 py-2 rounded-xl text-sm font-bold transition">연결</button>
             </div>
+
+            <div class="glass rounded-3xl overflow-hidden aspect-video relative shadow-2xl border border-white/5">
+                <iframe id="meet-frame" src="about:blank" 
+                        allow="camera; microphone; fullscreen" 
+                        class="w-full h-full border-none bg-slate-800/50"></iframe>
+                <div id="meet-placeholder" class="absolute inset-0 flex items-center justify-center text-slate-500 pointer-events-none">
+                    <p>상단에 미팅 주소를 입력하고 연결을 눌러주세요.</p>
+                </div>
+            </div>
+            
             <div class="flex gap-4">
-                <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-3 rounded-2xl transition flex-1 text-sm font-medium">
-                    Google Meet 새 회의 열기
+                <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-3 rounded-2xl transition flex-1 text-xs font-medium border border-white/10 text-slate-400">
+                    새 회의 주소 만들기 (새 창)
                 </button>
             </div>
         </div>
 
         <div class="space-y-6">
-            <div class="glass p-6 rounded-3xl shadow-xl">
-                <div class="flex justify-around mb-6 text-sm font-bold border-b border-white/10">
-                    <button id="tab-timer" onclick="setMode('timer')" class="pb-2 px-2 active-tab">TIMER</button>
-                    <button id="tab-stopwatch" onclick="setMode('stopwatch')" class="pb-2 px-2 opacity-50">STOPWATCH</button>
+            <div class="glass p-6 rounded-3xl shadow-xl border border-white/10">
+                <div class="flex justify-around mb-6 text-sm font-bold border-b border-white/5">
+                    <button id="tab-timer" onclick="setMode('timer')" class="pb-2 px-2 active-tab transition-all">TIMER</button>
+                    <button id="tab-stopwatch" onclick="setMode('stopwatch')" class="pb-2 px-2 opacity-50 transition-all">STOPWATCH</button>
                 </div>
 
                 <div class="text-center mb-6">
@@ -48,13 +59,13 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
-                    <button id="start-btn" onclick="start()" class="col-span-2 bg-indigo-500 hover:bg-indigo-600 text-white py-3 rounded-xl font-bold transition">START</button>
-                    <button onclick="pause()" class="bg-white/10 hover:bg-white/20 py-3 rounded-xl font-medium transition text-sm">PAUSE</button>
-                    <button onclick="reset()" class="bg-white/10 hover:bg-white/20 py-3 rounded-xl font-medium transition text-sm text-rose-400">RESET</button>
+                    <button id="start-btn" onclick="start()" class="col-span-2 bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl font-bold transition shadow-lg shadow-indigo-500/20">START</button>
+                    <button onclick="pause()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-sm">PAUSE</button>
+                    <button onclick="reset()" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl font-medium transition text-sm text-rose-400">RESET</button>
                 </div>
             </div>
 
-            <div class="glass p-4 rounded-3xl shadow-xl overflow-hidden">
+            <div class="glass p-4 rounded-3xl shadow-xl border border-white/5">
                 <div class="rounded-2xl overflow-hidden aspect-video">
                     <iframe width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>
                 </div>
@@ -62,16 +73,31 @@
         </div>
     </main>
 
+    <footer class="mt-8 text-center text-[10px] text-slate-600 tracking-widest uppercase">
+        Study Room &copy; 2026
+    </footer>
+
     <script>
-        let mode = 'timer'; // 'timer' or 'stopwatch'
+        // 미팅 업데이트 로직
+        function updateMeeting() {
+            const url = document.getElementById('meet-url').value;
+            const frame = document.getElementById('meet-frame');
+            const placeholder = document.getElementById('meet-placeholder');
+            
+            if (url.includes('meet.google.com') || url.includes('daily.co')) {
+                frame.src = url;
+                placeholder.style.display = 'none';
+            } else {
+                alert('올바른 미팅 주소를 입력해주세요.');
+            }
+        }
+
+        // 타이머 로직
+        let mode = 'timer'; 
         let time = 25 * 60;
         let elapsed = 0;
         let isRunning = false;
         let interval;
-
-        const display = document.getElementById('display');
-        const mainDisplay = document.getElementById('main-display');
-        const modeLabel = document.getElementById('mode-label');
 
         function formatTime(s) {
             const h = Math.floor(s / 3600);
@@ -90,14 +116,13 @@
             
             if (mode === 'timer') {
                 time = 25 * 60;
-                modeLabel.innerText = "Focus Mode";
-                display.innerText = "25:00";
+                document.getElementById('mode-label').innerText = "Focus Mode";
+                document.getElementById('display').innerText = "25:00";
             } else {
                 elapsed = 0;
-                modeLabel.innerText = "Study Records";
-                display.innerText = "00:00:00";
+                document.getElementById('mode-label').innerText = "Study Records";
+                document.getElementById('display').innerText = "00:00:00";
             }
-            mainDisplay.innerText = display.innerText;
         }
 
         function start() {
@@ -106,18 +131,14 @@
             document.getElementById('start-btn').innerText = "RUNNING...";
             interval = setInterval(() => {
                 if (mode === 'timer') {
-                    if (time <= 0) {
-                        pause();
-                        alert("Time is up!");
-                        return;
-                    }
+                    if (time <= 0) { pause(); alert("Time is up!"); return; }
                     time--;
-                    display.innerText = formatTime(time);
+                    document.getElementById('display').innerText = formatTime(time);
                 } else {
                     elapsed++;
-                    display.innerText = formatTime(elapsed);
+                    document.getElementById('display').innerText = formatTime(elapsed);
                 }
-                mainDisplay.innerText = display.innerText;
+                document.getElementById('main-display').innerText = document.getElementById('display').innerText;
             }, 1000);
         }
 
@@ -129,14 +150,9 @@
 
         function reset() {
             pause();
-            if (mode === 'timer') {
-                time = 25 * 60;
-                display.innerText = "25:00";
-            } else {
-                elapsed = 0;
-                display.innerText = "00:00:00";
-            }
-            mainDisplay.innerText = display.innerText;
+            if (mode === 'timer') { time = 25 * 60; document.getElementById('display').innerText = "25:00"; }
+            else { elapsed = 0; document.getElementById('display').innerText = "00:00:00"; }
+            document.getElementById('main-display').innerText = document.getElementById('display').innerText;
         }
     </script>
 </body>
