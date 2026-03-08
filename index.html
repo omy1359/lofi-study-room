@@ -1,28 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Lofi Study Room</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhyuck's Lofi Study</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at top right, #1e1b4b, #0f172a); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .active-tab { border-bottom: 2px solid #818cf8; color: #818cf8; }
+    </style>
 </head>
-<body class="bg-slate-900 text-white flex flex-col items-center justify-center min-h-screen">
-    <h1 class="text-3xl font-bold mb-6 text-indigo-400">🌙 민혁의 로파이 스터디 룸</h1>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl p-4">
-        <div class="bg-gray-800 p-4 rounded-2xl shadow-xl">
-            <h2 class="mb-4 text-center font-semibold">🎵 Lo-fi Music</h2>
-            <div class="aspect-video">
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<body class="text-slate-200 min-h-screen flex flex-col p-4 md:p-8">
+
+    <header class="flex justify-between items-center max-w-7xl mx-auto w-full mb-8">
+        <h1 class="text-xl font-bold tracking-tighter text-indigo-400">🌙 LOFI STUDY ROOM</h1>
+        <div id="main-display" class="glass px-6 py-2 rounded-full mono text-2xl text-indigo-300 shadow-lg">00:00:00</div>
+    </header>
+
+    <main class="grid grid-cols-1 lg:grid-cols-4 gap-6 max-w-7xl mx-auto w-full flex-grow">
+        
+        <div class="lg:col-span-3 space-y-4">
+            <div class="glass rounded-3xl overflow-hidden aspect-video relative shadow-2xl">
+                <iframe src="https://minhyuck.daily.co/test-room" 
+                        allow="camera; microphone; fullscreen" 
+                        class="w-full h-full border-none"></iframe>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-3 rounded-2xl transition flex-1 text-sm font-medium">
+                    Google Meet 새 회의 열기
+                </button>
             </div>
         </div>
 
-        <div class="bg-gray-800 p-4 rounded-2xl shadow-xl flex flex-col items-center justify-center">
-            <h2 class="mb-4 font-semibold">💻 Study Cam</h2>
-            <div class="bg-gray-700 w-full h-full rounded-lg flex items-center justify-center text-gray-400">
-                <p>여기에 구글 미팅 주소를 연결하세요!</p>
+        <div class="space-y-6">
+            <div class="glass p-6 rounded-3xl shadow-xl">
+                <div class="flex justify-around mb-6 text-sm font-bold border-b border-white/10">
+                    <button id="tab-timer" onclick="setMode('timer')" class="pb-2 px-2 active-tab">TIMER</button>
+                    <button id="tab-stopwatch" onclick="setMode('stopwatch')" class="pb-2 px-2 opacity-50">STOPWATCH</button>
+                </div>
+
+                <div class="text-center mb-6">
+                    <div id="display" class="text-4xl mono font-medium mb-2 text-white">25:00</div>
+                    <p id="mode-label" class="text-[10px] tracking-[0.2em] text-slate-500 uppercase">Focus Mode</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="start-btn" onclick="start()" class="col-span-2 bg-indigo-500 hover:bg-indigo-600 text-white py-3 rounded-xl font-bold transition">START</button>
+                    <button onclick="pause()" class="bg-white/10 hover:bg-white/20 py-3 rounded-xl font-medium transition text-sm">PAUSE</button>
+                    <button onclick="reset()" class="bg-white/10 hover:bg-white/20 py-3 rounded-xl font-medium transition text-sm text-rose-400">RESET</button>
+                </div>
             </div>
-            <button onclick="window.open('https://meet.google.com/new')" class="mt-4 bg-indigo-600 px-6 py-2 rounded-full font-bold">새 회의 시작하기</button>
+
+            <div class="glass p-4 rounded-3xl shadow-xl overflow-hidden">
+                <div class="rounded-2xl overflow-hidden aspect-video">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
+
+    <script>
+        let mode = 'timer'; // 'timer' or 'stopwatch'
+        let time = 25 * 60;
+        let elapsed = 0;
+        let isRunning = false;
+        let interval;
+
+        const display = document.getElementById('display');
+        const mainDisplay = document.getElementById('main-display');
+        const modeLabel = document.getElementById('mode-label');
+
+        function formatTime(s) {
+            const h = Math.floor(s / 3600);
+            const m = Math.floor((s % 3600) / 60);
+            const sec = s % 60;
+            return `${h > 0 ? h.toString().padStart(2, '0') + ':' : ''}${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        function setMode(newMode) {
+            pause();
+            mode = newMode;
+            document.getElementById('tab-timer').classList.toggle('active-tab', mode === 'timer');
+            document.getElementById('tab-timer').classList.toggle('opacity-50', mode !== 'timer');
+            document.getElementById('tab-stopwatch').classList.toggle('active-tab', mode === 'stopwatch');
+            document.getElementById('tab-stopwatch').classList.toggle('opacity-50', mode !== 'stopwatch');
+            
+            if (mode === 'timer') {
+                time = 25 * 60;
+                modeLabel.innerText = "Focus Mode";
+                display.innerText = "25:00";
+            } else {
+                elapsed = 0;
+                modeLabel.innerText = "Study Records";
+                display.innerText = "00:00:00";
+            }
+            mainDisplay.innerText = display.innerText;
+        }
+
+        function start() {
+            if (isRunning) return;
+            isRunning = true;
+            document.getElementById('start-btn').innerText = "RUNNING...";
+            interval = setInterval(() => {
+                if (mode === 'timer') {
+                    if (time <= 0) {
+                        pause();
+                        alert("Time is up!");
+                        return;
+                    }
+                    time--;
+                    display.innerText = formatTime(time);
+                } else {
+                    elapsed++;
+                    display.innerText = formatTime(elapsed);
+                }
+                mainDisplay.innerText = display.innerText;
+            }, 1000);
+        }
+
+        function pause() {
+            isRunning = false;
+            clearInterval(interval);
+            document.getElementById('start-btn').innerText = "START";
+        }
+
+        function reset() {
+            pause();
+            if (mode === 'timer') {
+                time = 25 * 60;
+                display.innerText = "25:00";
+            } else {
+                elapsed = 0;
+                display.innerText = "00:00:00";
+            }
+            mainDisplay.innerText = display.innerText;
+        }
+    </script>
 </body>
 </html>
