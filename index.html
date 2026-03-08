@@ -12,6 +12,8 @@
         .mono { font-family: 'JetBrains Mono', monospace; }
         .active-tab { border-bottom: 2px solid #818cf8; color: #818cf8; }
         input::-webkit-inner-spin-button { display: none; }
+        .music-btn { transition: all 0.3s ease; }
+        .music-btn:hover { background: rgba(129, 140, 248, 0.2); transform: translateY(-2px); }
     </style>
 </head>
 <body class="text-slate-200 min-h-screen flex flex-col p-4 md:p-8">
@@ -28,9 +30,21 @@
         
         <div class="lg:col-span-2 space-y-6">
             <div class="glass rounded-3xl overflow-hidden aspect-video shadow-2xl border border-white/5">
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe id="main-video" width="100%" height="100%" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
             
+            <div class="glass p-3 rounded-2xl border border-white/10 overflow-x-auto">
+                <div class="flex gap-2 min-w-max">
+                    <button onclick="changeMusic('jfKfPfyJRdk')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter border-indigo-500/50">🎧 LOFI GIRL</button>
+                    <button onclick="changeMusic('4xDzrJKXOOY')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">💻 CODING</button>
+                    <button onclick="changeMusic('rPjez8z61rI')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">☕ CAFE JAZZ</button>
+                    <button onclick="changeMusic('lP26UCnoH9s')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">🌧️ RAINY DAY</button>
+                    <button onclick="changeMusic('n61ULEU7QD4')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">🌃 CHILL NIGHT</button>
+                    <button onclick="changeMusic('S0_U3_fK9I0')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">📚 CLASSICAL</button>
+                    <button onclick="changeMusic('mv5qzMt7dg8')" class="music-btn px-4 py-2 rounded-xl glass text-[10px] font-bold tracking-tighter">🌳 NATURE</button>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="grid grid-cols-2 gap-4">
                     <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group text-center">
@@ -86,7 +100,12 @@
     </footer>
 
     <script>
-        // 영어 명언 리스트
+        // 음악 변경 함수
+        function changeMusic(videoId) {
+            const player = document.getElementById('main-video');
+            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`;
+        }
+
         const quotes = [
             { text: "Your limitation—it's only your imagination.", author: "Daily Motivation" },
             { text: "Push yourself, because no one else is going to do it for you.", author: "Success Mindset" },
@@ -108,17 +127,12 @@
 
         function updateDate() {
             const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const date = String(now.getDate()).padStart(2, '0');
+            const year = now.getFullYear(), month = String(now.getMonth() + 1).padStart(2, '0'), date = String(now.getDate()).padStart(2, '0');
             const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-            const day = dayNames[now.getDay()];
-            document.getElementById('current-date').innerText = `${year}. ${month}. ${date}. ${day}`;
+            document.getElementById('current-date').innerText = `${year}. ${month}. ${date}. ${dayNames[now.getDay()]}`;
         }
 
-        // 초기 실행
-        updateDate();
-        displayRandomQuote();
+        updateDate(); displayRandomQuote();
 
         let mode = 'timer', time = 25 * 60, elapsed = 0, isRunning = false, interval;
         const inputMin = document.getElementById('input-min');
