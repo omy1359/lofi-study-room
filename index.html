@@ -16,8 +16,11 @@
 </head>
 <body class="text-slate-200 min-h-screen flex flex-col p-4 md:p-8">
 
-    <header class="flex justify-between items-center max-w-7xl mx-auto w-full mb-8">
-        <h1 class="text-xl font-bold tracking-widest text-indigo-400 font-mono">🌙 STUDY ROOM</h1>
+    <header class="flex justify-between items-end max-w-7xl mx-auto w-full mb-8">
+        <div class="flex flex-col gap-1">
+            <h1 class="text-xl font-bold tracking-widest text-indigo-400 font-mono leading-none">🌙 STUDY ROOM</h1>
+            <div id="current-date" class="text-[10px] tracking-[0.2em] text-slate-500 font-bold uppercase ml-1">2026. 00. 00. ---</div>
+        </div>
         <div id="main-display" class="glass px-6 py-2 rounded-full mono text-2xl text-indigo-300 shadow-lg border border-indigo-500/30">00:00:00</div>
     </header>
 
@@ -29,11 +32,13 @@
             </div>
             
             <div class="grid grid-cols-2 gap-4">
-                <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex items-center justify-center gap-3 border border-white/10 group">
-                    <span class="text-sm font-bold group-hover:text-indigo-400">Google Meet 시작하기</span>
+                <button onclick="window.open('https://meet.google.com/new')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group">
+                    <span class="text-sm font-bold group-hover:text-indigo-400">Google Meet</span>
+                    <span class="text-[10px] opacity-40 uppercase tracking-tighter">Start New Meeting</span>
                 </button>
-                <button onclick="window.open('https://zoom.us/start/videohost')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex items-center justify-center gap-3 border border-white/10 group">
-                    <span class="text-sm font-bold group-hover:text-blue-400">Zoom 회의 시작하기</span>
+                <button onclick="window.open('https://zoom.us/start/webinar')" class="glass hover:bg-white/10 px-6 py-4 rounded-2xl transition flex flex-col items-center justify-center gap-2 border border-white/10 group">
+                    <span class="text-sm font-bold group-hover:text-blue-400">Zoom Meeting</span>
+                    <span class="text-[10px] opacity-40 uppercase tracking-tighter">Instant Launch</span>
                 </button>
             </div>
         </div>
@@ -46,8 +51,8 @@
                 </div>
 
                 <div id="timer-setting" class="flex justify-center items-center gap-2 mb-4">
-                    <input type="number" id="input-min" value="25" min="0" max="999" class="bg-white/5 border border-white/10 rounded-lg w-16 py-1 text-center mono text-xl focus:outline-none focus:border-indigo-500">
-                    <span class="text-slate-500 font-bold">MIN</span>
+                    <input type="number" id="input-min" value="25" min="0" max="999" class="bg-white/5 border border-white/10 rounded-lg w-16 py-1 text-center mono text-xl focus:outline-none focus:border-indigo-500 text-white">
+                    <span class="text-slate-500 font-bold text-xs uppercase tracking-tighter">Minutes</span>
                 </div>
 
                 <div class="text-center mb-6">
@@ -62,19 +67,36 @@
                 </div>
             </div>
 
-            <div class="glass p-5 rounded-3xl border border-white/5">
-                <p class="text-[10px] text-slate-500 leading-relaxed italic text-center">
-                    "Setting your own focus time helps you stay productive."
-                </p>
+            <div class="glass p-5 rounded-3xl border border-white/5 text-center">
+                <p class="text-[10px] text-slate-500 leading-relaxed italic mb-1">"Time is up! Take a break."</p>
+                <p class="text-[9px] text-slate-600 uppercase tracking-widest">Notification Alert</p>
             </div>
         </div>
     </main>
 
-    <footer class="mt-8 text-center text-[10px] text-slate-600 tracking-widest uppercase">
-        Study Room &copy; 2026
+    <footer class="mt-8 flex justify-between items-center max-w-7xl mx-auto w-full border-t border-white/5 pt-6">
+        <div class="text-[10px] text-slate-600 tracking-widest uppercase">
+            Study Room &copy; 2026
+        </div>
+        <div class="text-[11px] text-indigo-400/60 font-medium tracking-tight">
+            Made by - Minhyuck Oh
+        </div>
     </footer>
 
     <script>
+        // 날짜 업데이트 함수
+        function updateDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const date = String(now.getDate()).padStart(2, '0');
+            const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+            const day = dayNames[now.getDay()];
+            
+            document.getElementById('current-date').innerText = `${year}. ${month}. ${date}. ${day}`;
+        }
+        updateDate();
+
         let mode = 'timer', time = 25 * 60, elapsed = 0, isRunning = false, interval;
         const inputMin = document.getElementById('input-min');
 
@@ -83,9 +105,9 @@
             return `${h > 0 ? h.toString().padStart(2, '0') + ':' : ''}${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
         }
 
-        inputMin.addEventListener('change', () => {
+        inputMin.addEventListener('input', () => {
             if (mode === 'timer' && !isRunning) {
-                time = parseInt(inputMin.value || 0) * 60;
+                time = Math.max(0, parseInt(inputMin.value || 0)) * 60;
                 document.getElementById('display').innerText = formatTime(time);
                 document.getElementById('main-display').innerText = formatTime(time);
             }
@@ -95,7 +117,7 @@
             pause(); mode = newMode;
             document.getElementById('tab-timer').className = mode === 'timer' ? 'pb-2 px-2 active-tab' : 'pb-2 px-2 opacity-50';
             document.getElementById('tab-stopwatch').className = mode === 'stopwatch' ? 'pb-2 px-2 active-tab' : 'pb-2 px-2 opacity-50';
-            document.getElementById('timer-setting').style.display = mode === 'timer' ? 'flex' : 'none';
+            document.getElementById('timer-setting').style.visibility = mode === 'timer' ? 'visible' : 'hidden';
             
             if (mode === 'timer') {
                 time = parseInt(inputMin.value || 0) * 60;
@@ -111,7 +133,6 @@
         function start() {
             if (isRunning) return;
             if (mode === 'timer' && time <= 0) return alert("Please set focus time!");
-            
             isRunning = true;
             document.getElementById('start-btn').innerText = "RUNNING...";
             interval = setInterval(() => {
@@ -131,23 +152,8 @@
             }, 1000);
         }
 
-        function pause() {
-            isRunning = false;
-            clearInterval(interval);
-            document.getElementById('start-btn').innerText = "START";
-        }
-
-        function reset() {
-            pause();
-            if (mode === 'timer') {
-                time = parseInt(inputMin.value || 0) * 60;
-                document.getElementById('display').innerText = formatTime(time);
-            } else {
-                elapsed = 0;
-                document.getElementById('display').innerText = "00:00:00";
-            }
-            document.getElementById('main-display').innerText = document.getElementById('display').innerText;
-        }
+        function pause() { isRunning = false; clearInterval(interval); document.getElementById('start-btn').innerText = "START"; }
+        function reset() { pause(); if (mode === 'timer') { time = parseInt(inputMin.value || 0) * 60; document.getElementById('display').innerText = formatTime(time); } else { elapsed = 0; document.getElementById('display').innerText = "00:00:00"; } document.getElementById('main-display').innerText = document.getElementById('display').innerText; }
     </script>
 </body>
 </html>
